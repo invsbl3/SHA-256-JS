@@ -119,10 +119,11 @@ So, if you put the variable you want inside a function, and take a fresh copy wi
 I learned this refreshing the `MAP` variable [here in line 32](https://github.com/invsbl3/pacman/blob/main/js/map.js) of this [Pacman Game](https://github.com/invsbl3/pacman) that you can [!!PLAY HERE!!](https://invsbl3.github.io/pacman/)
 
 
-These rule doesn't apply only to primitive types, which are:
+This rule doesn't apply only to primitive types, which are:
 
 `string`, `number`, `boolean`, `null`, `undefined`, `symbol`, `bigint`.
-Pres `F12` in Chrome and check it out in the Console!
+
+Press `F12` in Chrome and check it out in the Console!
 
 Example with `string` type:
 ```
@@ -138,9 +139,37 @@ Example with `string` type:
 
 I'm doing this `Documentation` to learn a bit more of `.md` and `bitwise operations` in JS.
 
-I think that good Documentation help people trying to learn,
+I think that good Documentation helps people trying to learn,
 
 And I'm having `a lot of trouble` that could be **easily resolved** with
 Good documentation...
 
 ... And that's why I'm going to focus on let at least a **readable one** in my little projects **:D**
+
+
+
+## Implementation
+
+### primes.js
+
+ For the SHS algo's we need some information with the first prime numbers...
+ 
+- Let's consider `2` as the first prime
+- The `next primes` are Natural Numbers that can't be `exactly divided` by any smaller number greater than `1`
+- By `exactly divided` I mean that the remainder of the division should be `0`
+   - like `3`, that can't be exacly divided by `2`
+   - like `5`, that can't be exactly divided by `4`, `3` and `2`
+   - `4` can be exatcly divided by `2`, it's `not a prime number`
+   - `7` is the next prime, because can't be divided exatcly by `6`, `5`, `4`, `3` and `2`
+   
+I implemented a function to find the first primes.
+Feel free to change it and test anything about it.
+As it's in js, you can simply run the code and press `F12` in Chrome, and go to `Console` to check and test...
+
+One way to optimize this function would be, for example:
+```
+    You know that any even number is not prime, because you can divide it by 2...
+    so you can skip the numbers in the format 2*number...
+    You can use the same argument for any prime in the prime list, so you cut the space in which you are looking before even test some numbers!
+    but JS is not for performance code, and my intent here is to focus on the SHS system implementation, not on Fast Algorithms..
+```
