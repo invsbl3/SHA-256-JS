@@ -1,20 +1,6 @@
 // ||||
 
-// let's consider 2 as the first prime
-// the next primes are natural numbers that can't be
-// exactly divided by any smaller number greater than 1
-// like 3, that can't be divided by 2
-// like 5, that can't be divided by 4, 3 and 2
-// 4 can be exatcly divided by 2, it's not a prime number
 
-// one way to optimize this function would be, for example:
-// you know that any even number is not prime, because you can
-// divide it by 2... so you can skip the numbers in the format
-// 2*number... you can use the same argument for any prime in
-// the prime list, so you cut the space in which you are looking
-// before even test some numbers!
-// but JS is not for performance code, and my intent here is to
-// focus on the SHS system implementation, not on Fast Algorithms..
 
 function first64primes() {
     let primes = [2];

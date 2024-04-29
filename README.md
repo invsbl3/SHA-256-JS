@@ -28,27 +28,32 @@ Check out important and often forgotten rules about JS Objects [here](https://de
 
 
 #### LEFT SHIFT  <<
+Example:
 |3-LEFT SHIFT in binary number `(01101101)`|`(01101101) << 3`|
 | :------- | ------: |
 |1. you have a fixed amount of digits ( 8-digits in the next examples )|`(01101101)`|
 |2. zeroes are added on the top right|`(01101101)000`|
 |3. push the old digits to the right|`011(01101000)`|
 |4. right-most digits are basically lost|`(01101000)`|
-|5. example:|
-    ```
-    (01101101) << 3 == (01101000)
-    (01101101)000 -> 011(01101000)
-    ```
-|
+
+So it goes like this:
+```
+       (01101101) << 3
+       (01101101)000
+    011(01101000)
+       (01101000)
+```
+
 
 #### RIGHT SHIFT >>
 1. same thing as LEFT SHIFT, but opposite sides.
 2. example:
-   ```
-   (01011011) >> 2 == (00010110)
-   
-   00(01011011) -> (00010110)11
-   ```
+```
+     (01011011) >> 2
+   00(01011011)
+     (00010110)11
+     (00010110)
+```
 
 ## JS Binary Operations:
 In JS
