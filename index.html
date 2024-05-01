@@ -8,38 +8,40 @@
 </head>
 <style type="text/css">
     body {
-        width: 90vw;
+        width: 100vw;
         background-color: black;
         color: white;
         font-family: sans-serif;
         display: inline-block;
-        align-self: auto;
-        margin: 5vw;
-    }
-
-    div {
+        align-self: center;
         text-align: center;
-        border: 1vw solid white;
-        margin: 0.5vw;
+        padding-left: 3%;
     }
 
-#tabss{
-    align-self: center;
-    margin: auto;
-}
+    #big {
+        display: block;
+        padding-right: 1vw;
+        align-items: center;
+    }
 
-    #table0,
-    #table1,
-    #table3 {
-        display: inline-block;
-        border: 1px solid purple;
-        float:left;
+
+    #small {
         width: auto;
+        float: left;
+    }
+
+    table td {
+        padding: 1vw;
+    }
+
+    #tabss {
+        text-align: right;
+        align-self: center;
     }
 
     #js-calc,
     #paper {
-        text-align: right;
+        text-align: left;
     }
 
     #paper {
@@ -49,21 +51,37 @@
 
 <body>
     <div id="title" class="float-container">
-        <h2>THE FIRST 64 PRIMES</h2>
+        <h3>THE FIRST 80 PRIMES</h3>
     </div>
     <div id="the-primes" class="float-container"></div>
-    <div id="title2" class="float-container">
-        <h2>K obtained with 64bit JS Float</h2>
-        <h2 style="color:green;">K from paper</h2>
+
+
+    <div id="big">
+        <div id="small">
+            <div id="title2" class="float-container">
+                <h3>H 64bit JS Float</h3>
+                <h3 style="color:green;">H from paper</h3>
+            </div>
+            <div id="sqremainders" class="float-container"></div>
+        </div>
+
+
+        <div id="small">
+            <div id="title2" class="float-container">
+                <h3>K 64bit JS Float</h3>
+                <h3 style="color:green;">K from paper</h3>
+            </div>
+            <div id="cbremainders" class="float-container"></div>
+        </div>
+
     </div>
-    <div id="remainders" class="float-container"></div>
-
-
-
     <div id="scripts" style="display:none;">
-        <script src="js/primes.js"></script>
+        <script src="js/constants.js"></script>
         <script src="js/draw.js"></script>
+        <script src="js/padding.js"></script>
+        <script src="js/SHA1.js"></script>
         <script src="js/main.js"></script>
+
     </div>
 </body>
 

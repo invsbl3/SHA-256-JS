@@ -25,7 +25,6 @@ let printPrimes = () => {
     // console.log(bigString);
     thePrimes.innerHTML += bigString;
 };
-
 function printTable(dataSet, primesList, labels, tableName){
     const table_rows = Math.floor(dataSet[0].length);
     let bigString = "";
@@ -46,25 +45,21 @@ function printTable(dataSet, primesList, labels, tableName){
     bigString += "</table>";
     return bigString;
 };
-
-printRemainders = () => {
-    let sKjs = splitData(Kjs);
-    let sK = splitData(K);
-    let sPrimes = splitData(primesList);
+printRemainders = (Kjs, K, primesList, splits, elementId) => {
+    let sKjs = splitData(Kjs,splits);
+    let sK = splitData(K,splits);
+    let sPrimes = splitData(primesList,splits);
     let BIG_STRING = "";
     
     for (let i = 0; i < sKjs.length; i++) {
         BIG_STRING += printTable([sKjs[i], sK[i]], sPrimes[i], ["js-calc", "paper"], "table" + i);
     }
     
-    let Ktable = document.getElementById("remainders");
-    Ktable.innerHTML += BIG_STRING;
-}
+    let tablesDiv = document.getElementById(elementId);
+    tablesDiv.innerHTML += BIG_STRING;
+};
+function splitData(Kjs, cols) {
 
-
-function splitData(Kjs) {
-
-    let cols = 1;
 
     let rows = Math.floor(Kjs.length / cols) + 1;
 

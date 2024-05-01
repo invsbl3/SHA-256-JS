@@ -1,5 +1,13 @@
 # SHA-256 in JS
  
+Hi **:D** 
+
+This is `over-documented` for the purpose of learning.
+
+If you read this and find something to correct, please, **contact me** about!
+
+Thanks!
+
 ## Hash, Salt, Security 
  
 ### What is a Hash?
@@ -188,17 +196,57 @@ Example with `string` type:
     console.log ("X = ", X);
 ```
 
+### JS Chars, Strings, Floats
 
-## Extra
+The mode in which these things realy behave in the background matters to this type of work (padding, parsing and modify data in bitwise operations).
 
-I'm doing this `Documentation` to learn a bit more of `.md` and `bitwise operations` in JS.
+- A `float` in JS is a `64-bit`...
+- A `string` in JS is in using `chars` in `UTF-16`.
 
-I think that good Documentation helps people trying to learn,
 
-And I'm having `a lot of trouble` that could be **easily resolved** with
-Good documentation...
+### Chars and String Standards
 
-... And that's why I'm going to focus on let at least a **readable one** in my little projects **:D**
+- The `MNIST SHS` paper uses `ASCII` chars. This means that, by default, to get the right
+`hash` using the algo's, your message, before `padding` and `parsing` should be checked.
+
+- `ASCII` is a table with the essential chars needed to operate a computer, programming and write in English.
+An `ASCII` char has `8bits` (`8bits` = `1byte`)
+
+- `HTML5` (the base of the internet nowadays) uses `UTF-8` Chars, which is a table of Chars with `8bytes` each (`8bytes` = `64bits`), so they're 8 times bigger than the original `ASCII` characters. They have characters to render in the screen almost any language in the world!
+So, if you just take the binary representation of your String in a Programming Language, you can get a very different binary response than you are looking for to use `SHS Algorithms`.
+
+- `UTF-8` is based in `ASCII`, so, if you take a `string` with `chars` encoded in `UTF-8`, this means that, if they're present in the `ASCII` table, they have the same code.
+So, in other words, if your `string` in `UTF-8` has only "basic programming and English Chars", you are safe to take their `ASCII` binary representations.
+
+- More information [here](https://www.w3schools.com/charsets/ref_html_ascii.asp) and [here](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode)
+
+#### Some Examples:
+
+JS has a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt) called `.codePointAt` that you can use in any `string Object`.
+`.codePointAt` returns a `number`.
+
+Don't use `.charCodeAt()`, it will bring problems with emojis and [surrogate pairs](https://hadrysmateusz.medium.com/how-to-get-all-characters-in-a-string-in-javascript-d1a6ccd052b1).
+
+
+The method `.toString(base)` can be applied in a `number` and returns a `string` with the representation of this number in another `base` (We use `base-10` in the day-to-day, and `base-2`=`binary` and `base-16`=`hexadecimal` when programming). 
+
+Using this method in the Japanese Hiragana Character `sa`="さ", we check this:
+
+```
+"さ".codePointAt(0) = 12373
+"さ".CodePointAt(0).toString(2) = '11000001010101'
+"さ".CodePointAt(0).toString(2).length = 14
+``` 
+This means that these Char is using `14 bits` or more to be represented...
+Probably, it's an `UTF-8 char` almost at the end of the list!
+
+Press `F12` in Google Chrome and Take this code snipped to check by yourself!
+
+Change the `char` and se the output...
+
+Basically, you can check if any `char` of your `message` to be hashed is using less than `8-bits`...
+
+If this is true, your message in `UTF-8` is equivalent to a message in `ASCII`.
 
 
 
@@ -294,3 +342,14 @@ One way to optimize this function would be, for example:
     You can use the same argument for any prime in the prime list, so you cut the space in which you are looking before even test some numbers!
     but JS is not for performance code, and my intent here is to focus on the SHS system implementation, not on Fast Algorithms..
 ```
+
+## Extra
+
+I'm doing this `Documentation` to learn a bit more of `.md` and `bitwise operations` in JS.
+
+I think that good Documentation helps people trying to learn,
+
+And I'm having `a lot of trouble` that could be **easily resolved** with
+Good documentation...
+
+... And that's why I'm going to focus on let at least a **readable one** in my little projects **:D**
