@@ -52,10 +52,12 @@ function padUTF16(stringMessage) {
     }
     let message16 = message16bits(stringMessage);
     console.log(message16.length);
+    // before making blocks, first add the padding!
+
+    // then, make the blocks already with the pieces divided.
     const blockBits = 512;
     let Blocks = [];
-    //let numberOfBlocks = Math.floor(bitsMessage.length / blockBits) + 1;
-
+    
     let actualBlock = -1;
     let actualPos = 0;
     for (char = 0; char < message16.length; char++) {

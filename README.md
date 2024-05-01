@@ -196,7 +196,7 @@ Example with `string` type:
     console.log ("X = ", X);
 ```
 
-### JS Chars, Strings, Floats
+## JS Chars, Strings, Floats
 
 The mode in which these things realy behave in the background matters to this type of work (padding, parsing and modify data in bitwise operations).
 
@@ -204,23 +204,39 @@ The mode in which these things realy behave in the background matters to this ty
 - A `string` in JS is in using `chars` in `UTF-16`.
 
 
-### Chars and String Standards
+## Char and String Standards
 
 - The `MNIST SHS` paper uses `ASCII` chars. This means that, by default, to get the right
 `hash` using the algo's, your message, before `padding` and `parsing` should be checked.
 
 - `ASCII` is a table with the essential chars needed to operate a computer, programming and write in English.
-An `ASCII` char has `8bits` (`8bits` = `1byte`)
+An `ASCII` char has `7-bits`, carrying `2**8 = 128` possible chars.
+This System was extended later to `8-bits`. Check it out [here](https://www.ascii-code.com/).
+In general, nowadays computers reserve `1byte`=`8bits` for ASCII chars.
 
-- `HTML5` (the base of the internet nowadays) uses `UTF-8` Chars, which is a table of Chars with `8bytes` each (`8bytes` = `64bits`), so they're 8 times bigger than the original `ASCII` characters. They have characters to render in the screen almost any language in the world!
+- `HTML5` (the base of the internet nowadays) uses `UTF-8` and `UTF-16`.
+
+- each added `bit` turns out to double the possible `chars` in an encoding system...
+
+- `UTF-8` uses `8-bits`, so it describes `256` different [chars](https://net-comber.com/charset.html).
+
+- `UTF-16`, in its way, has <code>2<sup>16</sup> > 65.000 </code> possible characters. It's <code>2<sup>8</sup> = 256</code> times bigger than `UTF-8` and <code>2<sup>9</sup> = 512</code> times bigger than `ASCII`!
+
+- They have characters to render in the screen almost any language in the world!
 So, if you just take the binary representation of your String in a Programming Language, you can get a very different binary response than you are looking for to use `SHS Algorithms`.
 
-- `UTF-8` is based in `ASCII`, so, if you take a `string` with `chars` encoded in `UTF-8`, this means that, if they're present in the `ASCII` table, they have the same code.
-So, in other words, if your `string` in `UTF-8` has only "basic programming and English Chars", you are safe to take their `ASCII` binary representations.
+
+
+
+- `UTF-8` and `UTF-16`is based in `ASCII`, so, if you take a `string` with `chars` encoded in `UTF-16`, this means that, if they're present in the `ASCII` table, they have the same code.
+
+So, in other words, if your `string` in `UTF-16` has only "basic programming and English Chars", you are safe to take their `ASCII` binary representations.
+
+
 
 - More information [here](https://www.w3schools.com/charsets/ref_html_ascii.asp) and [here](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode)
 
-#### Some Examples:
+### Some Examples:
 
 JS has a [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt) called `.codePointAt` that you can use in any `string Object`.
 `.codePointAt` returns a `number`.
