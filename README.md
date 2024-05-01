@@ -1,21 +1,70 @@
 # SHA-256 in JS
  
-Check the original [NIST Documentation](https://csrc.nist.gov/pubs/fips/180-4/upd1/final) about SHS.
+## Hash, Salt, Security 
+ 
+### What is a Hash?
 
-Check how to learn **M**ark**D**own (to make the famous README.md) [here](https://www.markdownguide.org/extended-syntax/)
+`Hashes` are like the `fingerprint` or the `iris-scan` of computer files.
 
-Test your .md files before pushing [here](https://markdownlivepreview.com/)
+`Hash Algorithms` are something "easy to calculate" (for computers) and super-hard to revert.
 
-Check out important and often forgotten rules about JS Objects [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types) and [here](https://www.w3schools.com/js/js_object_definition.asp):
+In other words, if you have a `hash` of a `message`, it's super-hard to know the original `message`...
 
--  focus on `const`, `let` and `var` differences
-- how creating a copy of an object **really** works, and how to handle it
+... But if you have the `message`, it's easy to calculate the `hash`
+
+We use this algorithms to check if a message was send entirely without loss of information.
+
+A `message` can be anything! Like a `game` or a `film` your computer is downloading.
+
+So we use `Hash Algorithms` to `verify integrity` of big (and small) archives.
 
 
+Another characterist of good `Hash Algorithms` is that they have almost no `fingerprint`...
+
+... This means that, if you change a tiny letter in some message, the `hash` of this new message is completely different and doesn't have any kind of connection with the `hash` of the original message....
+
+In other words, if you put the message "Hello, World! I'm very happy." in a good `Hash Algorithm`, and the message "Hello, World. I'm very happy. ", their outputs are going to be completely different and unrelated.
+
+So it's **`ULTRA-HARD`** to find a message with same hash and a similar content...
+
+So it's used as a very good `security-check`, also!
+
+That's why, for example, some `Cryptocurrencies' Protocols` use nested sequences of messages with `Hash Algorithms` in their routines...
+
+### Salt
+
+To add extra-security layer for some messages, we use something called `salt`...
+
+`Salts` are just a bunch of random digits added to a message before we use a `Hash Algorithm`...
+
+Maybe the hash of the message `123` is very well known, and some people have it stored in a big table of very-used-hashes...
+
+But the message `123fb8dca38ff25`maybe never have ever been calculated!
+
+So, if a web-site, instead of save your `password` saves the `hash` of your `password + salt`, it can verify easily the hash of what you send...
+
+... But it's harder for an attacker that took the `hash` and the `salt` to try to figure out your `password`...
+
+These simple but genial idea, with some other simple and genial ideas are making the internet environment safer for us to use...
+
+## References
+
+1. Check the original [NIST Documentation](https://csrc.nist.gov/pubs/fips/180-4/upd1/final) about SHS.
+
+2. Check how to learn **M**ark**D**own (to make the famous README.md) [here](https://www.markdownguide.org/extended-syntax/)
+
+3. Test your .md files before pushing [here](https://markdownlivepreview.com/).
+
+   Check out important and often forgotten rules about JS Objects [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types) and [here](https://www.w3schools.com/js/js_object_definition.asp):
+
+   -  focus on `const`, `let` and `var` differences
+   - how creating a copy of an object **really** works, and how to handle it
 
 
+## JS important stuff
 
-## JS Bitwise Logical Operators:
+
+### JS BITWISE LOGICAL OPERATORS
 
 | LOGICAL OPERATOR  | JS Symbol |
 | ------------- |:-------------:|
@@ -27,14 +76,16 @@ Check out important and often forgotten rules about JS Objects [here](https://de
 | RIGHT SHIFT | >>             |
 
 
-#### LEFT SHIFT  <<
+### LEFT SHIFT  OPERATOR ( << )
+
 Example:
-|3-LEFT SHIFT in binary number `(01101101)`|`(01101101) << 3`|
+
+|`3-digits` LEFT SHIFT in binary number `(01101101)`|`(01101101) << 3`|
 | :------- | ------: |
-|1. you have a fixed amount of digits ( 8-digits in the next examples )|`(01101101)`|
-|2. zeroes are added on the top right|`(01101101)000`|
-|3. push the old digits to the right|`011(01101000)`|
-|4. right-most digits are basically lost|`(01101000)`|
+  |1. you have a fixed amount of digits ( 8-digits in the next examples )|`(01101101)`|
+  |2. zeroes are added on the top right|`(01101101)000`|
+  |3. push the old digits to the right|`011(01101000)`|
+  |4. right-most digits are basically lost|`(01101000)`|
 
 So it goes like this:
 ```
@@ -45,7 +96,7 @@ So it goes like this:
 ```
 
 
-#### RIGHT SHIFT >>
+### RIGHT SHIFT OPERATOR ( >> )
 1. same thing as LEFT SHIFT, but opposite sides.
 2. example:
 ```
@@ -55,19 +106,17 @@ So it goes like this:
      (00010110)
 ```
 
-## JS Binary Operations:
-In JS
 
+## JS Common Problems Creating Variables
 
-
-## JS important memory stuff:
 In JS, creating a new `Object` with `=` turns out to only create a new pointer to the same memory place...
-In JS, everything almost is an `Object`.
-
 
 This means the `new variable` is the same as the
-`old variable`, and if you change one of them, the
-other **is going to change**.
+`old variable`, and if you change one of them,
+the other **is going to change**.
+
+In JS, almost everything is an `Object`, and the **problem** goes as follows:
+
 
 Example 1:
 ```
@@ -153,11 +202,78 @@ Good documentation...
 
 
 
-## Implementation
+## Implementation Steps
+
+### Preprocessing message M
+
+1. [ ] Ensure the message is initially in  `8-bit ASCII` to check the output
+
+2. [ ] Padding and Parsing, following `5.1.1` and `5.2.1` (for both `SHA-1` and `SHA-256`)
+3. [ ] Implement the Rotine Steps in ´6.2.1´ for ´SHA-1´and ´6.2.2´ for ´SHA-256´
+
+### Padding
+
+At the end of the message we should add some stuff.
+
+After that, the message should fit perfectly in block of 512 bits.
+
+1. [ ] Count the number of bits in the message and store it in a `64-bits` variable ( like `messageSize`)
+
+2. [ ] Chunk the message in blocks of `512-bits`
+
+3. [ ] In the last block (that possibly is incomplete, with less than `512-bits`), add `1` at the end of the message, and then various zeroes `0` until only `64-bit` are left to close this last packet with `512-bit`
+   
+   3.1 If there are `64bits` or less to close the last packet, the `100...0000` stuff is going to end in the next block, and we'll have 2 `512-bits` "last packets", and that's fine.
+
+4. [ ] In this `64-bit` you left blank in the last block, put your `messageSize`
+
+### Parsing
+
+The entire message is called `M`. After padding, each `block` is called <code>B = M<sup>(i)</sup></code> and has `512-bits`. The ~(i)~ is the number of the block in the sequence, starting with `0`!
+
+We are going to divide these blocks in `32-bit` pieces. Each `piece` called <code>P = B<sub>j</sub></code> and has `32-bits`. The ^j^ is the number of the piece in the sequence.
+
+So,  <code>M<sup>(4)</sup><sub>9</sub></code> is the <code>10<sup>th</sup> piece P</code>
+in the <code>B<sup>(5)</sup>(5)<sup>th</sup> block</code> of the big message `M` (because we are starting the counts with `0` and not `1`)!
+
+
+
+
+
+
+### For SHA-1:
+
+1. [ ] Implement the <code>K<sub>t</sub></code> constants present in [´4.2.1´](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=16)
+
+2. [ ] Implement the <code>Ch(x,y,z)</code>, `Maj(x,y,z)`, `Parity(x,y,z)` <code>ROTR<sup>n</sup>(x)</code>, <code>SHR<sup>n</sup>(x)</code> functions in [`4.1.1`](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=15)
+
+3. [ ] Implement the initial hash values <code>H<sup>(0)</sup><sub>n</sub></code> following [`5.3.1`](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=19)
+
+4. [ ] Follow  [´6.1.2´](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=23) to compute the `hash`
+    4.1 Assure that the addition is in modulo <code>2<sup>32</sup></code>
+
+
+### For SHA-256:
+
+1. [ ] Find the 64 first primes, take their cube-roots and save the first 32 bits of their fractional parts in the <code>K</code> variables, as in [`4.2.2`](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=16))
+
+2. [ ] For SHA-256: Implement the [`4.1.2`](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=15) functions
+
+3. [ ] Find the square-roots of the first eight primes and store them in the initial hash values variables, <code>H<sup>(0)</sup><sub>n</sub></code>, following [`5.3.3`](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=20)
+
+4. [ ] Follow  [´6.2.2´](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf#page=23) to compute the `hash`
+    4.1 Assure that the addition is in modulo <code>2<sup>32</sup></code>
+
+
+
+
+
+
+## About the Files
 
 ### primes.js
 
- For the SHS algo's we need some information with the first prime numbers...
+For the SHS algo's we need some information with the first prime numbers...
  
 - Let's consider `2` as the first prime
 - The `next primes` are Natural Numbers that can't be `exactly divided` by any smaller number greater than `1`

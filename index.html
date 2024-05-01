@@ -6,42 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
 </head>
-<style>
+<style type="text/css">
     body {
         width: 90vw;
-        height: 100vh;
-        display: block;
         background-color: black;
         color: white;
         font-family: sans-serif;
+        display: inline-block;
+        align-self: auto;
+        margin: 5vw;
     }
 
-    div#the-one-to-show-a-title, #the-primes {
+    div {
         text-align: center;
-        width: 90%;
-        border: 4px solid white;
-        padding: 12px;
+        border: 1vw solid white;
+        margin: 0.5vw;
     }
 
-    #tabss {
-        margin-left: auto;
-        margin-right: auto;
+#tabss{
+    align-self: center;
+    margin: auto;
+}
+
+    #table0,
+    #table1,
+    #table3 {
+        display: inline-block;
+        border: 1px solid purple;
+        float:left;
+        width: auto;
+    }
+
+    #js-calc,
+    #paper {
         text-align: right;
-        font-size: large;
     }
 
-    div#the-one-with-just-scripts {
-        display: none;
+    #paper {
+        color: green
     }
 </style>
 
 <body>
-    <div id="the-one-to-show-a-title">
-        <h2>THE FIRST 64 PRIMES</h2> 
+    <div id="title" class="float-container">
+        <h2>THE FIRST 64 PRIMES</h2>
     </div>
-    <div id="the-primes"></div>
-    <div id="the-one-with-just-scripts">
-        <script src="primes.js"></script>
+    <div id="the-primes" class="float-container"></div>
+    <div id="title2" class="float-container">
+        <h2>K obtained with 64bit JS Float</h2>
+        <h2 style="color:green;">K from paper</h2>
+    </div>
+    <div id="remainders" class="float-container"></div>
+
+
+
+    <div id="scripts" style="display:none;">
+        <script src="js/primes.js"></script>
+        <script src="js/draw.js"></script>
+        <script src="js/main.js"></script>
     </div>
 </body>
 
