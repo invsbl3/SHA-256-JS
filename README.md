@@ -196,14 +196,6 @@ Example with `string` type:
     console.log ("X = ", X);
 ```
 
-## JS Chars, Strings, Floats
-
-The mode in which these things realy behave in the background matters to this type of work (padding, parsing and modify data in bitwise operations).
-
-- A `float` in JS is a `64-bit`...
-- A `string` in JS is in using `chars` in `UTF-16`.
-
-
 ## Char and String Standards
 
 - The `MNIST SHS` paper uses `ASCII` chars. This means that, by default, to get the right
@@ -264,6 +256,29 @@ Basically, you can check if any `char` of your `message` to be hashed is using l
 
 If this is true, your message in `UTF-8` is equivalent to a message in `ASCII`.
 
+## JS Important Variable Properties
+
+To work with this `MNIST-SHS Algorithms` we need to operate amongst `bits` in `very-big elements`, so we need to know how this language stores each type of `varible` or [`primitive type`](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Data_structures#number_type) in the `memory`, and how the `operations` we are working with really do the job with these `vars`. 
+
+- a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) can be an `int` or a `float`. they are stored with `64-bits`, divided as follows: [ 1 bit sign, 11-bits exponent, 52bits mantissa]. So it's limit is far from a 64-bit number!
+
+- a `bigInt` is a type which can use `any` amount of bits you want. So, it's a very good type to store the size of the message at the end of the padding using `64-bits`.
+Note that if we try to use a `number` to store a `message size > 2**53` we would have problems!
+   - But we have to be careful, because the Math operations implemented to work with `numbers` won't work well with `bigInts`, because their inside-architecture is different !!!!
+
+- An `Array` is a sequence of variables.<br>
+   JS Stores the pointers to the memory place which have the variables in sequence.<Br> So each "Array Place" have a pointer to a memory (which has the information) and a pointer to the next "Array Place"...<br>
+The important thing is that an Array in JS have addresses stored with `32-bits`, so we have a limited amount of addresses to use for an Array!
+    - Depending on **HOW** we are going to store our information, we can run out of Array indexes very soon, get errors in the code and don't know where it's wrong! 
+
+- a `string` is an `Array` with only `chars` as `elements`.
+
+- a `char` is native encoded with `UTF-16` table in JS, so it's a `16-bits` variable.
+
+- Think about a `Book` with `300 pages`.<br> Each page has `250 words`. <br> In English, a word have between `4-5 letters` average `plus 1-2 chars` between then (a space and a point, for example). <br> Each `UTF-16 digit` has `16-bits`.<Br>
+Turns out this `Book` has `7.5mi bits`, which is a `23-bits` number.
+So, with about `500 - 1000 Books` like this we would run out of addresses in an Array
+using JS storing each `bit` in `one address`...
 
 
 ## Implementation Steps
@@ -281,15 +296,20 @@ At the end of the message we should add some stuff.
 
 After that, the message should fit perfectly in block of 512 bits.
 
-1. [ ] Count the number of bits in the message and store it in a `64-bits` variable ( like `messageSize`)
+0. Taking `UTF-16` entries for the padding now.
 
-2. [ ] Chunk the message in blocks of `512-bits`
+1. [x] Count the number of bits in the message and store it in a `64-bits` variable ( like `messageSize`)
 
-3. [ ] In the last block (that possibly is incomplete, with less than `512-bits`), add `1` at the end of the message, and then various zeroes `0` until only `64-bit` are left to close this last packet with `512-bit`
+2. [x] Chunk the message in blocks of `512-bits`
+
+3. [x] In the last block (that possibly is incomplete, with less than `512-bits`), add `1` at the end of the message, and then various zeroes `0` until only `64-bit` are left to close this last packet with `512-bit`
    
    3.1 If there are `64bits` or less to close the last packet, the `100...0000` stuff is going to end in the next block, and we'll have 2 `512-bits` "last packets", and that's fine.
 
-4. [ ] In this `64-bit` you left blank in the last block, put your `messageSize`
+4. [x] In this `64-bit` you left blank in the last block, put your `messageSize`
+
+5. [x] Check if message before and after padding is the same decompressing it correctly.
+
 
 ### Parsing
 

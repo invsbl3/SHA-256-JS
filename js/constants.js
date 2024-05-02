@@ -54,6 +54,8 @@ function cbRemainders(primes, numberOfPrimes) {
 function sqrtRemainder(prime) {
     let precision = 32;
     let float64SqrtRemainder = Math.sqrt(prime).toString(16);
+    //let float64SqrtRemainder = iroot(BigInt(prime), BigInt(2)).toString(16);
+    //console.log(float64SqrtRemainder);
     let index = 2;
     let remainder = float64SqrtRemainder.substring(index);
     return remainder;
@@ -65,6 +67,7 @@ function sqrtRemainders(primes, numberOfPrimes) {
     };
     return remainders;
 };
+
 
 let K256 = [
     "428a2f98d728ae22", "7137449123ef65cd", "b5c0fbcfec4d3b2f", "e9b5dba58189dbbc",
@@ -101,3 +104,35 @@ let H256 = [
     "5be0cd19"
 ];
 let H1 = ["67452301", "efcdab89", "98badcfe", "10325476", "c3d2e1f0"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const littleMessage = "this is a little message!";
+
+const mess = `
+Or more generally: surrogate pairs. Most characters in javascript are encoded using 2 bytes, but that’s not enough to encode every symbol. To deal with this problem, emoji and some other rare symbols are encoded with a pair of 2-byte characters — a surrogate pair.
+
+Surrogate pairs didn’t exist when JavaScript was created, so some parts of the language still treat these symbols like 2 separate characters. You can copy this snippet into your browser console to see for yourself:
+`
+let bigBook = "";
+let iter = 991;
+for (let i = 0; i < iter; i++) {
+    bigBook += mess;
+};
